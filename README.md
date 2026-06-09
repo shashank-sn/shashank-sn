@@ -32,3 +32,4 @@ that's what i work on.
   <a href="https://www.linkedin.com/in/thestupidpreneur/"><b>linkedin</b></a> &nbsp;·&nbsp;
   <a href="http://x.com/istupidpreneur"><b>x</b></a>
 </p>
+<!-- profile readme v2 -->
