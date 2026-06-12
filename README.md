@@ -1,8 +1,4 @@
-<p align="center">
-  <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&pause=1000&color=0366D6&random=false&width=435&lines=i+didn't+set+out+to+become+a+brand+strategist." alt="Typing SVG" />
-</p>
-
-<br>
+<h1 align="center">i didn't set out to become a brand strategist...</h1>
 
 <p align="center">
 i set out to build things. brands just kept being the thing that determined whether the building worked.
