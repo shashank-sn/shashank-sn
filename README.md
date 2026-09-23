@@ -10,9 +10,7 @@ i also built things on the side. **el mejor coffee** — built, scaled, sold. [*
 
 [**brandeey**](http://brandeey.com) is where i put what i know into a form anyone can use. the brand engine course, free tools, microcourses. seven years and 150+ companies compressed into something that doesn't require you to hire me to benefit from it.
 
-[<u>**hold your voice**</u>]([http://holdyourvoice.com](https://github.com/shashank-sn/holdyourvoice)) came from a different frustration. ai kept flattening everything into the same texture. founders who had real voice were publishing content that sounded like a press release written by a committee. hyv is the tool that catches the problem before it ships — score, highlight, rewrite. your voice, enforced. (open source)
-
-now i work as a full-stack ai marketer at [stitchflow](https://www.stitchflow.com).
+[<u>**hold your voice**</u>](https://github.com/shashank-sn/holdyourvoice)) came from a different frustration. ai kept flattening everything into the same texture. founders who had real voice were publishing content that sounded like a press release written by a committee. hyv is the tool that catches the problem before it ships — score, highlight, rewrite. your voice, enforced. (open source)
 
 i've delivered 100+ talks. i used to write a daily newsletter called [**the stupidpreneur**](https://stupidpreneur.beehiiv.com). i also ran [**two paise club**](http://twopaiseclub.com) — the underlying philosophy was very simple, to help people read non-fiction books so that they can up-skill themselves. i think out loud on [linkedin](https://www.linkedin.com/in/thestupidpreneur/) & [x](http://x.com/istupidpreneur) more than i probably should.
 
