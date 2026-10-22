@@ -192,7 +192,9 @@ RECEIPT_ROWS = [
 
 
 def receipt():
-    lh, rw, total = 22, 420, 14
+    """plays once and stays: the receipt is ~95 words, too long to read inside a loop."""
+    lh, rw = 22, 420
+    print_s = 7  # paper feed time; the stamp lands just after
     rx = (W - rw) / 2
     tx = rx + 22
     slot = 70  # y of the slot on the printer's front face
@@ -257,18 +259,17 @@ def receipt():
         '</g>'
     )
     steps = len(RECEIPT_ROWS) + 6  # the printer feeds in jerks, roughly a line at a time
-    hidden = f"translateY(-{rh + 30}px)"
+    blinks = round(print_s / 0.4)  # the led blinks while the printer runs
     css = (
-        f"@keyframes pr{{0%{{transform:{hidden};opacity:1;animation-timing-function:steps({steps},end)}}"
-        f"50%,92%{{transform:translateY(0);opacity:1}}97%{{transform:translateY(0);opacity:0}}100%{{transform:{hidden};opacity:0}}}}"
-        f"#paper{{animation:pr {total}s infinite}}"
-        f"@keyframes st{{0%,54%{{opacity:0;transform:rotate(-14deg) scale(2.6)}}"
-        f"57%{{opacity:.92;transform:rotate(-14deg) scale(.94)}}59%,92%{{opacity:.88;transform:rotate(-14deg) scale(1)}}"
-        f"96%,100%{{opacity:0;transform:rotate(-14deg) scale(1)}}}}"
-        f"#stamp{{transform-box:fill-box;transform-origin:center;animation:st {total}s infinite}}"
-        f"@keyframes led{{0%,49%{{fill:{ACCENT}}}50%,100%{{fill:{DEVICE_TEXT}}}}}"
+        f"@keyframes pr{{from{{transform:translateY(-{rh + 30}px);animation-timing-function:steps({steps},end)}}"
+        "to{transform:translateY(0)}}"
+        f"#paper{{animation:pr {print_s}s both}}"
+        "@keyframes st{from{opacity:0;transform:rotate(-14deg) scale(2.6)}"
+        "60%{opacity:.92;transform:rotate(-14deg) scale(.94)}to{opacity:.88;transform:rotate(-14deg) scale(1)}}"
+        f"#stamp{{transform-box:fill-box;transform-origin:center;animation:st .5s {print_s + 0.4}s both}}"
+        f"@keyframes led{{from,99%{{fill:{ACCENT}}}to{{fill:{DEVICE_TEXT}}}}}"
         "@keyframes bl{50%{opacity:.2}}"
-        f"#led{{animation:led {total}s infinite,bl .4s steps(1) infinite}}"
+        f"#led{{animation:led {print_s}s both,bl .4s steps(1) {blinks}}}"
     )
     write("d-receipt", h, body, css, size=14)
 
@@ -395,8 +396,16 @@ def eyebrow(x, y, label):
 
 
 def editor():
-    """ellora flags the ai tells, hands back the draft, and shows this readme's scores."""
-    total, h = 10, 350
+    """ellora flags the ai tells, hands back the draft, and shows this readme's scores.
+
+    timeline in seconds: the draft and its flags stay until `swap` (strikes are all in
+    by ~4 s), then the clean draft and the scores stay until the loop restarts at `total`.
+    """
+    total, swap, h = 20, 9.0, 350
+
+    def at(seconds):
+        return f"{seconds / total * 100:.1f}%"
+
     cx, cy, cw, ch = 30, 16, 780, 296
     char_w = 15 * CODE_ADV
     tx, ys = cx + 28, [cy + 124, cy + 156, cy + 188]
@@ -441,11 +450,14 @@ def editor():
             f'<text x="{side + 30}" y="{fy + 23}" font-size="14" fill="{INK}">{word}</text>'
             f'<text x="{side + 208}" y="{fy + 23}" text-anchor="end" font-family="{SANS}" font-size="12" fill="{ACCENT}">ai tell</text></g>'
         )
-        s0 = 12 + k * 6
+        flagged, struck = 1.0 + k * 0.6, 2.6 + k * 0.6  # seconds
         css.append(
-            f"@keyframes hl{k}{{0%,{s0}%{{opacity:0}}{s0 + 3}%,46%{{opacity:1}}50%,100%{{opacity:0}}}}.hl{k}{{animation:hl{k} {total}s infinite}}"
-            f"@keyframes sk{k}{{0%,{s0 + 18}%{{opacity:0}}{s0 + 20}%,46%{{opacity:1}}50%,100%{{opacity:0}}}}.sk{k}{{animation:sk{k} {total}s infinite}}"
-            f"@keyframes f{k}{{0%,{s0}%{{opacity:0;transform:translateX(12px)}}{s0 + 4}%,46%{{opacity:1;transform:translateX(0)}}50%,100%{{opacity:0}}}}#f{k}{{animation:f{k} {total}s infinite}}"
+            f"@keyframes hl{k}{{0%,{at(flagged)}{{opacity:0}}{at(flagged + .3)},{at(swap)}{{opacity:1}}{at(swap + .6)},100%{{opacity:0}}}}"
+            f".hl{k}{{animation:hl{k} {total}s infinite}}"
+            f"@keyframes sk{k}{{0%,{at(struck)}{{opacity:0}}{at(struck + .2)},{at(swap)}{{opacity:1}}{at(swap + .6)},100%{{opacity:0}}}}"
+            f".sk{k}{{animation:sk{k} {total}s infinite}}"
+            f"@keyframes f{k}{{0%,{at(flagged)}{{opacity:0;transform:translateX(12px)}}{at(flagged + .4)},{at(swap)}{{opacity:1;transform:translateX(0)}}"
+            f"{at(swap + .6)},100%{{opacity:0}}}}#f{k}{{animation:f{k} {total}s infinite}}"
         )
     body.append(
         '<g id="va">' + "".join(marks)
@@ -472,10 +484,11 @@ def editor():
         f'<text x="{W / 2}" y="{h - 10}" text-anchor="middle" font-family="{SANS}" font-size="14" fill="{MUTED}">'
         "inside chatgpt, claude and the apps your team already writes in</text>"
     )
+    shown = swap + 1.6  # clean draft fully in
     css.append(
-        f"@keyframes va{{0%,48%{{opacity:1}}53%,100%{{opacity:0}}}}#va,#sa,#pa{{animation:va {total}s infinite}}"
-        f"@keyframes vb{{0%,52%{{opacity:0}}57%,94%{{opacity:1}}100%{{opacity:0}}}}#vb,#sb,#pb{{animation:vb {total}s infinite}}"
-        "@keyframes m{0%,54%{transform:scaleX(0)}68%,100%{transform:scaleX(1)}}"
+        f"@keyframes va{{0%,{at(swap)}{{opacity:1}}{at(swap + .8)},100%{{opacity:0}}}}#va,#sa,#pa{{animation:va {total}s infinite}}"
+        f"@keyframes vb{{0%,{at(swap + .8)}{{opacity:0}}{at(shown)},{at(total - .8)}{{opacity:1}}100%{{opacity:0}}}}#vb,#sb,#pb{{animation:vb {total}s infinite}}"
+        f"@keyframes m{{0%,{at(shown)}{{transform:scaleX(0)}}{at(shown + 2)},100%{{transform:scaleX(1)}}}}"
         f".m{{transform-box:fill-box;transform-origin:left;animation:m {total}s infinite cubic-bezier(.3,0,.2,1)}}"
     )
     write("p4-ellora", h, "".join(body), "".join(css))
@@ -492,8 +505,9 @@ def xpanel():
     """the x profile; the cursor opens a dm and the reader types the problem.
 
     mirrors x.com/istupidpreneur: banner, avatar, bio, link, join date, post count (2026-10-22).
+    the loop is long enough to hold both messages for ~7 s after they are typed.
     """
-    total, h = 10, 374
+    total, h = 18, 374
     px, py, pw, ph = 40, 20, 430, 334
     dx, dy, dw, dh = 500, 20, 300, 334
     banner, avatar = data_uri(SRC / "banner.jpg"), data_uri(SRC / "avatar.jpg")
