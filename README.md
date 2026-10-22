@@ -1,35 +1,29 @@
-<h1 align="center">i didn't set out to become a brand strategist...</h1>
+<p align="center"><img src="assets/d-receipt.svg" width="100%" alt="a receipt for shashank sn: 150+ companies, 100+ talks, 7 things built, 2 exits"/></p>
 
-i actually set out to build things. brands just kept being the thing that determined whether the building worked.
+i didn't set out to become a brand strategist. i set out to build things.
 
-spent a year leading the brand at [**guvi hcl**](https://www.guvi.in) — one of the youngest heads of brand in india at that point. guinness record while i was there. interesting context to work in. guvi hcl is not a startup. which means brand decisions had weight, had consequence, had to survive committees and still land with people. that experience taught me that a brand that only works in a deck is not a brand. it's a proposal.
+so i built. a coffee brand called **el mejor**, which i scaled and sold. [**happy beginnings**](http://happybeginnings.in), india's first digital wedding invite service. a daily newsletter called [**the stupidpreneur**](https://stupidpreneur.beehiiv.com), which i also sold. **two paise club**, to get people reading non-fiction so they could upskill.
 
-after that i went fractional. a few companies at a time. brand decisions, positioning work, the kind of stuff that determines whether your marketing spend compounds or bleeds. still do it.
+<p align="center"><img src="assets/p1-shelf.svg" width="100%" alt="the things i built: el mejor coffee (sold), happy beginnings, the stupidpreneur (sold), two paise club"/></p>
 
-i also built things on the side. **el mejor coffee** — built, scaled, sold. [**happy beginnings**](http://happybeginnings.in), india's first digital wedding invite service. [**sayabout.us**](http://sayabout.us), a testimonial collection platform i'm building with two co-founders toward $10k mrr. none of these are accidental. each one was a test case for ideas i was already using with clients.
+somewhere in there i noticed a pattern. the product rarely decided who won. the brand did. two things could be equally good, and people would still pick one, remember it, and come back to it. i wanted to know why.
 
-[**brandeey**](http://brandeey.com) is where i put what i know into a form anyone can use. the brand engine course, free tools, microcourses. seven years and 150+ companies compressed into something that doesn't require you to hire me to benefit from it.
+<p align="center"><img src="assets/p2-choose.svg" width="100%" alt="two identical products, and people still pick one"/></p>
 
-[<u>**hold your voice**</u>](https://github.com/shashank-sn/holdyourvoice) came from a different frustration. ai kept flattening everything into the same texture. founders who had real voice were publishing content that sounded like a press release written by a committee. hyv is the tool that catches the problem before it ships — score, highlight, rewrite. your voice, enforced. (open source)
+i chased that question at [**guvi hcl**](https://www.guvi.in), where i led brand for a year. one of the youngest heads of brand in india at the time, and we set a guinness record while i was there. guvi hcl is not a startup, so every brand call had to survive committees and still land with real people. that's where i learned that a brand that only works in a deck isn't a brand. it's a proposal.
 
-i've delivered 100+ talks. i used to write a daily newsletter called [**the stupidpreneur**](https://stupidpreneur.beehiiv.com). i also ran **two paise club** — the underlying philosophy was very simple, to help people read non-fiction books so that they can up-skill themselves. i think out loud on [**x**](http://x.com/istupidpreneur) more than i probably should.
+<p align="center"><img src="assets/p3-deck.svg" width="100%" alt="a brand slide stamped proposal"/></p>
 
-the common thread in all of it is the same question of what actually makes people choose you, remember you, come back to you.
+now i chase it fractionally, a few companies at a time. positioning, brand decisions, the calls that decide whether your marketing spend compounds or bleeds. seven years and 150+ companies in, i put what i know into [**brandeey**](http://brandeey.com), so you don't have to hire me to use it.
 
-that's what i work on.
+then ai showed up and started sanding every founder's voice down to the same texture. people with a real voice were shipping posts that read like a press release written by a committee. so i built [**ellora**](https://getellora.com). it lives inside chatgpt, claude and the other apps your team already writes in. it learns how your brand sounds, then fixes each draft before anyone has to. this readme went through it too.
 
----
+<p align="center"><img src="assets/p4-ellora.svg" width="100%" alt="ellora flags ai-sounding words in a draft and the draft comes back in your voice"/></p>
 
-<p align="center">
-<i>the projects</i>
-</p>
+right now i'm also building [**sayabout.us**](http://sayabout.us) with my co-founders, a testimonial tool. it's the same question again, only this time your customers answer it.
 
-| | project | what it is |
-|---|---|---|
-| | [**brandeey**](http://brandeey.com) | the brand engine course, free tools, microcourses — seven years and 150+ companies compressed |
-| | [**hold your voice**](http://holdyourvoice.com) | score, highlight, rewrite — catch ai voice-flattening before it ships |
-| | [**happy beginnings**](http://happybeginnings.in) | india's first digital wedding invite service |
-| | [**sayabout.us**](http://sayabout.us) | testimonial collection platform, building toward $10k mrr |
-| | **el mejor coffee** | built, scaled, sold |
-| | [**the stupidpreneur**](http://stupidpreneur.in) | daily newsletter, sold |
-| | **two paise club**| daily non-fiction book newsletter — bite-sized learnings to help people upskill |
+i've given 100+ talks, and i think out loud on [**x**](http://x.com/istupidpreneur) more than i probably should.
+
+so if you built something good and people still pick the other one, [come talk to me](http://x.com/istupidpreneur).
+
+<p align="center"><a href="http://x.com/istupidpreneur"><img src="assets/p5-x.svg" width="100%" alt="send shashank a dm on x: @istupidpreneur"/></a></p>
