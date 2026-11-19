@@ -17,6 +17,7 @@ motion sees the finished picture.
 import base64
 import html
 import io
+import math
 import re
 from pathlib import Path
 
@@ -86,7 +87,7 @@ def font_faces(svg):
         opts = subset.Options()
         opts.flavor = "woff2"
         opts.layout_features = ["kern", "liga", "calt"]
-        font = TTFont(FONTS / WEIGHTS[weight])
+        font = TTFont(FONTS / WEIGHTS[weight], recalcTimestamp=False)  # same bytes on every build
         sub = subset.Subsetter(opts)
         sub.populate(text=text)
         sub.subset(font)
@@ -178,7 +179,7 @@ def rise(selector, delay, dist=24, dur=0.9):
 # 1. hero: the name, what got built, and the four numbers
 # --------------------------------------------------------------------------
 def hero():
-    h = 392
+    h = 404
     css, body = [], []
 
     # the name rises out of a mask, word by word
@@ -224,22 +225,29 @@ def hero():
     css.append(rise("#pre", 0.5))
 
     # the numbers
-    stats = [("150+", "companies"), ("100+", "talks"), ("7", "things built"), ("2", "exits")]
+    stats = [("150+", "companies"), ("100+", "talks"), ("13", "companies built"), ("2", "exits")]
     ny, ly = 324, 352
     for i, (num, label) in enumerate(stats):
         cx = 46 + i * 196
-        if label == "exits":
-            body.append(f'<rect id="hi" x="{cx - 18}" y="{ny - 56}" width="128" height="98" rx="18" fill="{LIME}"/>')
-            css.append(f"@keyframes hi{{from{{transform:scaleX(0)}}to{{transform:none}}}}"
-                       f"#hi{{transform-box:fill-box;transform-origin:left;animation:hi .7s 1.9s both {EASE_OUT}}}")
-        part, c, _ = odometer(f"s{i}", cx, ny, num, 52, start=0.7 + i * 0.15)
+        exits = label == "exits"
+        if exits:
+            # the one stat that is money: an ink tile, lime number, tipped like a sticker
+            pad, tw = 18, 136
+            tx, ty, th = cx - 22, ny - 38 - pad, (ly + 5 + pad) - (ny - 38 - pad)
+            body.append(f'<g id="tile" transform="rotate(-3 {tx + tw / 2:.0f} {ty + th / 2:.0f})">'
+                        f'<rect x="{tx}" y="{ty}" width="{tw:.0f}" height="{th}" rx="18" fill="{INK}"/>')
+            css.append(f"@keyframes tile{{from{{opacity:0;transform:rotate(-14deg) scale(.6)}}to{{opacity:1;transform:rotate(-3deg)}}}}"
+                       f"#tile{{transform-box:fill-box;transform-origin:center;animation:tile .7s 1.0s both {SPRING}}}")
+        part, c, _ = odometer(f"s{i}", cx, ny, num, 52, fill=LIME if exits else INK, start=0.7 + i * 0.15)
         body.append(part)
         css.append(c)
-        body.append(f'<text id="l{i}" x="{cx}" y="{ly}" font-size="17" font-weight="500" fill="{INK}">{label}</text>')
+        body.append(f'<text id="l{i}" x="{cx}" y="{ly}" font-size="17" font-weight="500" fill="{CARD if exits else INK}">{label}</text>')
         css.append(rise(f"#l{i}", 1.0 + i * 0.15, 10, 0.7))
+        if exits:
+            body.append("</g>")
     write("hero", h, "".join(body), "".join(css),
           "shashank sn. i've built brands for 150+ companies, a coffee brand and a newsletter (both sold), "
-          "india's first digital wedding invite, a reading club and an ai editor. 150+ companies, 100+ talks, 7 things built, 2 exits.")
+          "india's first digital wedding invite, a reading club and an ai editor. 150+ companies, 100+ talks, 13 companies built, 2 exits.")
 
 
 # --------------------------------------------------------------------------
@@ -262,7 +270,27 @@ def invite():
             f'<text x="0" y="76" text-anchor="middle" font-size="12" font-weight="500" fill="{MUTED}">the date</text></g>'
             f'<path d="M-50 84 L0 116 L50 84 L50 138 Q50 144 44 144 L-44 144 Q-50 144 -50 138 Z" fill="{INK}"/>'
             f'<path d="M-50 84 L0 116 L50 84" fill="none" stroke="{GROUND}" stroke-width="1.6" stroke-opacity=".35"/>'
-            f'<path d="M0 126 c-9 -11 -21 -2 -10 7 l10 9 l10 -9 c11 -9 -1 -18 -10 -7z" fill="{LIME}"/>')
+            + wax_seal(0, 117))
+
+
+HEART = ("M0 -3.2 C-1.4 -7.4 -7.6 -8.6 -9.6 -4.4 C-11.2 -1 -9 2.6 -5.6 5.4 L0 10 L5.6 5.4 "
+         "C9 2.6 11.2 -1 9.6 -4.4 C7.6 -8.6 1.4 -7.4 0 -3.2 Z")  # symmetric, 20 wide, centred on 0,0
+
+
+def wax_seal(x, y, r=17):
+    """a lime wax seal with a soft scalloped rim, an embossed ring and a heart pressed in."""
+    bumps, pts = 14, []
+    for i in range(bumps * 2):
+        a = math.pi * 2 * i / (bumps * 2) - math.pi / 2
+        rr = r if i % 2 == 0 else r - 1.8
+        pts.append((x + rr * math.cos(a), y + rr * math.sin(a)))
+    n = len(pts)
+    mid = [((pts[i][0] + pts[(i + 1) % n][0]) / 2, (pts[i][1] + pts[(i + 1) % n][1]) / 2) for i in range(n)]
+    d = f"M{mid[0][0]:.2f} {mid[0][1]:.2f}" + "".join(
+        f" Q{pts[(i + 1) % n][0]:.2f} {pts[(i + 1) % n][1]:.2f} {mid[(i + 1) % n][0]:.2f} {mid[(i + 1) % n][1]:.2f}" for i in range(n)) + " Z"
+    return (f'<path d="{d}" fill="{LIME}" stroke="{INK}" stroke-width="2" stroke-linejoin="round"/>'
+            f'<circle cx="{x}" cy="{y}" r="{r - 5.5}" fill="none" stroke="{INK}" stroke-width="1.2" stroke-opacity=".3"/>'
+            f'<path d="{HEART}" transform="translate({x} {y - 0.6}) scale(.62)" fill="{INK}"/>')
 
 
 def smiley():
