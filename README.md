@@ -1,4 +1,4 @@
-<p align="center"><img src="assets/hero.svg" width="100%" alt="shashank sn: 150+ companies, 100+ talks, 7 things built, 2 exits"/></p>
+<p align="center"><img src="assets/hero.svg" width="100%" alt="shashank sn: 150+ companies, 100+ talks, 13 companies built, 2 exits"/></p>
 
 i didn't set out to become a brand strategist. i set out to build things.
 
